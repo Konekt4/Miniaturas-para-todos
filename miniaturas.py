@@ -24,7 +24,6 @@ def programa(encendido):
         if opcion == 1:
             system("cls")
             mini()
-            time.sleep(2)
             system("cls")
 
         elif opcion == 2:
