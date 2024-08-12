@@ -5,20 +5,27 @@
 from tkinter import *
 from os import system
 from PIL import Image, ImageTk
+import os
 
 def descargar_miniatura():
     video_id = video_id_entry.get()
     if video_id:
         miniatura_url = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg"
-        system(f"curl -k -o {video_id}.jpg {miniatura_url}")
+        
+        # Obtener la ruta donde se encuentra el script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        save_path = os.path.join(script_dir, f"{video_id}.jpg")
+        
+        system(f"curl -k -o \"{save_path}\" {miniatura_url}")
         resultado_label.config(text="Miniatura descargada", fg="green")
 
         # Cargar y mostrar la miniatura descargada
-        img = Image.open(f"{video_id}.jpg")
+        img = Image.open(save_path)
         img = img.resize((320, 180))  # Redimensionar la imagen
         img_tk = ImageTk.PhotoImage(img)
         miniatura_label.config(image=img_tk)
         miniatura_label.image = img_tk  # Mantener referencia para evitar que se borre la imagen
+
 
 def salir():
     root.destroy()
